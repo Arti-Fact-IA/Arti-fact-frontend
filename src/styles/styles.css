@@ -6,17 +6,24 @@ body {
 }
 
 .container {
-    width: 80%;
+    width: 50%;
     margin: auto;
     padding: 20px;
+    text-align: center;
 }
 
-.card {
-    background: white;
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background: #007bff;
     padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
+    color: white;
+}
+
+.nav-link {
+    margin-right: 15px;
+    color: white;
+    text-decoration: none;
 }
 
 button {

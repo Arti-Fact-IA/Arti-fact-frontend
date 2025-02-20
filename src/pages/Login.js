@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -18,11 +19,12 @@ function Login() {
     };
 
     return (
-        <div>
+        <div className="container">
             <h1>Connexion</h1>
             <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Mot de passe" onChange={(e) => setPassword(e.target.value)} />
             <button onClick={handleLogin}>Se connecter</button>
+            <p>Pas encore de compte ? <Link to="/register">S'inscrire</Link></p>
         </div>
     );
 }
