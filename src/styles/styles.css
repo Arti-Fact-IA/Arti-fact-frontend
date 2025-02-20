@@ -29,6 +29,12 @@ body {
     color: white;
 }
 
+.upload-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 button {
     background-color: #007bff;
     color: white;

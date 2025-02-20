@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import UploadFile from "./UploadFile";
 import "../styles/styles.css";
 
 function Navbar() {
@@ -15,6 +16,7 @@ function Navbar() {
             <div>
                 {token ? (
                     <>
+                        <UploadFile />
                         <Link to="/dashboard" className="nav-link">Dashboard</Link>
                         <button onClick={handleLogout} className="btn-logout">Déconnexion</button>
                     </>
