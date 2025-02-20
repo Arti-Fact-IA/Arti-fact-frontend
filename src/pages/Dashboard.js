@@ -1,48 +1,54 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../styles/styles.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 function Dashboard() {
     const [factures, setFactures] = useState([]);
-    const [file, setFile] = useState(null);
-    const token = localStorage.getItem("token");
 
     useEffect(() => {
+        const fetchFactures = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await axios.get(`${API_URL}/factures`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setFactures(res.data);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des factures", error);
+            }
+        };
         fetchFactures();
     }, []);
 
-    const fetchFactures = async () => {
-        try {
-            const res = await axios.get(`${API_URL}/factures`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setFactures(res.data);
-        } catch (error) {
-            console.error("Erreur lors du chargement des factures", error);
-        }
-    };
-
-    const handleUpload = async () => {
-        if (!file) return alert("Sélectionnez un fichier");
-        const formData = new FormData();
-        formData.append("file", file);
-        try {
-            await axios.post(`${API_URL}/upload`, formData, {
-                headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
-            });
-            alert("Facture uploadée avec succès !");
-            fetchFactures();
-        } catch (error) {
-            console.error("Erreur lors de l'upload", error);
-        }
-    };
-
     return (
-        <div>
-            <h1>Tableau de bord</h1>
-            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-            <button onClick={handleUpload}>Téléverser</button>
+        <div className="container">
+            <h1>Tableau des Factures</h1>
+            <table className="facture-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Entreprise Émettrice</th>
+                        <th>Nom du Fichier</th>
+                        <th>Montant (€)</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {factures.map((facture) => (
+                        <tr key={facture.id}>
+                            <td>{facture.id}</td>
+                            <td>{facture.entreprise_emettrice}</td>
+                            <td>{facture.nom_fichier}</td>
+                            <td>{facture.montant}</td>
+                            <td>{facture.date_facture}</td>
+                            <td>{facture.status}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

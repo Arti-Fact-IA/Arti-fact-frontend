@@ -6,24 +6,27 @@ body {
 }
 
 .container {
-    width: 50%;
+    width: 80%;
     margin: auto;
     padding: 20px;
     text-align: center;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    background: #007bff;
-    padding: 15px;
-    color: white;
+.facture-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-.nav-link {
-    margin-right: 15px;
+.facture-table th, .facture-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.facture-table th {
+    background-color: #007bff;
     color: white;
-    text-decoration: none;
 }
 
 button {
@@ -33,6 +36,7 @@ button {
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 20px;
 }
 
 button:hover {
