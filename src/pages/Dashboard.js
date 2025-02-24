@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import FactureDetails from "../components/FactureDetails";
 import "../styles/styles.css";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 function Dashboard() {
     const [factures, setFactures] = useState([]);
+    const [selectedFacture, setSelectedFacture] = useState(null);
 
     useEffect(() => {
         const fetchFactures = async () => {
@@ -34,21 +36,26 @@ function Dashboard() {
                         <th>Montant (€)</th>
                         <th>Date</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {factures.map((facture) => (
                         <tr key={facture.id}>
                             <td>{facture.id}</td>
-                            <td>{facture.entreprise_emettrice}</td>
+                            <td>{facture.entreprise_emettrice || 'NC'}</td>
                             <td>{facture.nom_fichier}</td>
-                            <td>{facture.montant}</td>
-                            <td>{facture.date_facture}</td>
+                            <td>{facture.montant !== null ? facture.montant.toFixed(2) : 'NC'}</td>
+                            <td>{facture.date_facture ? new Date(facture.date_facture).toLocaleDateString() : 'NC'}</td>
                             <td>{facture.status}</td>
+                            <td>
+                                <button onClick={() => setSelectedFacture(facture)}>Voir Détails</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            {selectedFacture && <FactureDetails facture={selectedFacture} onClose={() => setSelectedFacture(null)} />}
         </div>
     );
 }
